@@ -145,17 +145,21 @@ console.log(navigationLinks.length);
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
+    for (let j = 0; j < pages.length; j++) {
+      // Find the corresponding page using data-page attribute
+      const targetPage = document.querySelector(`[data-page="${this.dataset.page}"]`);
 
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
+      if (targetPage) {
+        // Toggle 'active' class for the selected page and navigation link
+        targetPage.classList.add("active");
         navigationLinks[i].classList.add("active");
+
+        // Scroll to the top of the page
         window.scrollTo(0, 0);
       } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
+        // Handle the case where the targetPage is not found (page removed)
+        console.error(`Page not found for link: ${this.dataset.page}`);
       }
     }
-
   });
 }
