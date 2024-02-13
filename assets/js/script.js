@@ -143,23 +143,32 @@ const pages = document.querySelectorAll("[data-page]");
 console.log(navigationLinks.length);
 
 // add event to all nav link
+// add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
-    for (let j = 0; j < pages.length; j++) {
-      // Find the corresponding page using data-page attribute
-      const targetPage = document.querySelector(`[data-page="${this.dataset.page}"]`);
+    // Check if the navigation link has a data-page attribute
+    const pageId = this.dataset.page;
+    if (pageId) {
+      const targetPage = document.querySelector(`[data-page="${pageId}"]`);
 
       if (targetPage) {
-        // Toggle 'active' class for the selected page and navigation link
+        // First, remove 'active' class from all pages and navigation links
+        pages.forEach(page => page.classList.remove("active"));
+        navigationLinks.forEach(link => link.classList.remove("active"));
+
+        // Then, add 'active' class to the target page and the clicked navigation link
         targetPage.classList.add("active");
-        navigationLinks[i].classList.add("active");
+        this.classList.add("active");
 
         // Scroll to the top of the page
         window.scrollTo(0, 0);
       } else {
-        // Handle the case where the targetPage is not found (page removed)
-        console.error(`Page not found for link: ${this.dataset.page}`);
+        // Log an error or handle the case where the target page is not found
+        console.error(`Page not found for link: ${pageId}`);
       }
+    } else {
+      // Handle the case where data-page attribute is missing or undefined
+      console.error("No data-page attribute found on clicked navigation link.");
     }
   });
 }
