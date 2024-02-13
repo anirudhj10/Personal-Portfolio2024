@@ -152,7 +152,7 @@ for (let i = 0; i < navigationLinks.length; i++) {
         console.log("inside if statement");
         pages[i].classList.add("active");
         navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
         
       } else {
         pages[i].classList.remove("active");
